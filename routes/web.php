@@ -26,11 +26,13 @@ Route::middleware('auth')->group(function () {
     // Task routes
     Route::resource('projects.tasks', TaskController::class);
 
-    // TimeEntry routes
-    Route::resource('tasks.time_entries', TimeEntryController::class);
+    // TimeEntry routes (general and task-specific)
+    Route::resource('time_entries', TimeEntryController::class)->except(['create', 'store']);
+    Route::get('time_entries/create', [TimeEntryController::class, 'create'])->name('time_entries.create');
+    Route::post('time_entries', [TimeEntryController::class, 'store'])->name('time_entries.store');
 
     // Admin dashboard
-    Route::middleware('admin')->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
     });
 });
