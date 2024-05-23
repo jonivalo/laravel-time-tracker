@@ -4,12 +4,28 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Navigation Links -->
-                <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                    {{ __('Home') }}
-                </x-nav-link>
-                <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                    {{ __('Dashboard') }}
-                </x-nav-link>
+                <a href="{{ route('home') }}" class="flex items-center">
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Time Tracker</h1>
+                </a>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
+                        {{ __('Projects') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('projects.tasks.index', ['project' => 1])" :active="request()->routeIs('projects.tasks.index')">
+                        {{ __('Tasks') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('time_entries.index')" :active="request()->routeIs('time_entries.index')">
+                        {{ __('Work Entries') }}
+                    </x-nav-link>
+                    @if (auth()->check() && auth()->user()->usertype == 'admin')
+                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
+                    @endif
+                </div>
             </div>
 
             @auth
@@ -26,7 +42,6 @@
                             </div>
                         </button>
                     </x-slot>
-
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
@@ -72,6 +87,15 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
+                {{ __('Projects') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('projects.tasks.index', ['project' => 1])" :active="request()->routeIs('projects.tasks.index')">
+                {{ __('Tasks') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('time_entries.index')" :active="request()->routeIs('time_entries.index')">
+                {{ __('Work Entries') }}
             </x-responsive-nav-link>
         </div>
 
