@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\TimeEntry;
+use App\Models\User;
 
 class HomeController extends Controller
 {
     public function index()
     {
         if (auth()->user()->usertype == 'admin') {
-            return view('admin.dashboard');
+            $users = User::with(['projects.tasks.timeEntries'])->get();
+            return view('admin.dashboard', compact('users'));
         }
 
         $projects = Project::all();
