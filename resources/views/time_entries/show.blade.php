@@ -12,9 +12,11 @@
                     <h3 class="text-2xl font-bold">{{ __('Start Time: ') }}{{ $timeEntry->start_time }}</h3>
                     <h3 class="text-2xl font-bold">{{ __('End Time: ') }}{{ $timeEntry->end_time }}</h3>
                     <p class="mt-4">{{ __('Duration: ') }}{{ $timeEntry->duration }} {{ __('minutes') }}</p>
-                    <a href="{{ route('tasks.time_entries.index', $task) }}" class="text-blue-600 hover:text-blue-900 mt-4 inline-block">{{ __('Back to Time Entries') }}</a>
+                    <a href="{{ route('time_entries.index') }}" class="text-blue-600 hover:text-blue-900 mt-4 inline-block">{{ __('Back to Time Entries') }}</a>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+
+
