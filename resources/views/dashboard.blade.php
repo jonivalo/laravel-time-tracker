@@ -82,13 +82,13 @@
                         <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
                             <h4 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ __('Task: ') }}{{ $timeEntry->task->name }}</h4>
                             <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('Duration: ') }}{{ $timeEntry->duration }}{{ __(' minutes') }}</p>
-                            <a href="{{ route('tasks.time_entries.show', [$timeEntry->task, $timeEntry]) }}" class="text-blue-600 hover:text-blue-800 mt-4 inline-block">{{ __('View Entry') }}</a>
+                            <a href="{{ route('time_entries.show', $timeEntry) }}" class="text-blue-600 hover:text-blue-800 mt-4 inline-block">{{ __('View Entry') }}</a>
                         </div>
                     @endforeach
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mt-6">{{ __('Log Time Entry') }}</h3>
                 @if($tasks->isNotEmpty())
-                    <form action="{{ route('tasks.time_entries.store', ['task' => $tasks->first()->id]) }}" method="POST" class="mt-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md">
+                    <form action="{{ route('time_entries.store') }}" method="POST" class="mt-4 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md" onsubmit="calculateDuration(event)">
                         @csrf
                         <div class="mb-4">
                             <x-input-label for="task_time_entry" :value="__('Task')" class="text-gray-900 dark:text-gray-200" />
@@ -106,11 +106,8 @@
                             <x-input-label for="end_time" :value="__('End Time')" class="text-gray-900 dark:text-gray-200" />
                             <x-text-input id="end_time" class="block mt-1 w-full bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-200" type="datetime-local" name="end_time" required />
                         </div>
-                        <div class="mb-4">
-                            <x-input-label for="duration" :value="__('Duration (in minutes)')" class="text-gray-900 dark:text-gray-200" />
-                            <x-text-input id="duration" class="block mt-1 w-full bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-200" type="number" name="duration" required />
-                        </div>
                         <x-primary-button>{{ __('Log Time Entry') }}</x-primary-button>
+                        <input type="hidden" name="duration" id="duration">
                     </form>
                 @else
                     <p class="text-gray-600 dark:text-gray-400">{{ __('No tasks available to log time entries.') }}</p>
@@ -118,4 +115,20 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function calculateDuration(event) {
+            event.preventDefault();
+            const startTime = new Date(document.getElementById('start_time').value);
+            const endTime = new Date(document.getElementById('end_time').value);
+            const durationInput = document.getElementById('duration');
+
+            if (startTime && endTime) {
+                const duration = Math.round((endTime - startTime) / 60000);
+                durationInput.value = duration;
+            }
+
+            event.target.submit();
+        }
+    </script>
 </x-app-layout>
