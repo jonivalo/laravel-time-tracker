@@ -19,15 +19,16 @@
                 <label for="email" class="absolute -top-4 left-3 bg-white dark:bg-gray-800 px-1 text-sm text-gray-600 dark:text-gray-400">
                     {{ __('Email') }}
                 </label>
-                <input id="email" class="block w-full mt-6 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring focus:ring-pink-500 focus:border-pink-500" type="email" name="email" :value="old('email')" required autofocus />
+                <input id="email" class="block w-full mt-6 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring focus:ring-blue-500 focus:border-blue-500" type="email" name="email" :value="old('email')" required autofocus />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
 
             <div class="flex items-center justify-end">
-                <button type="submit" class="inline-flex items-center px-6 py-2 bg-pink-500 text-white font-bold rounded-lg shadow-md hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 dark:focus:ring-offset-gray-800">
+                <button type="submit" class="inline-flex items-center px-6 py-2 bg-blue-500 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-800">
                     {{ __('Email Password Reset Link') }}
                 </button>
             </div>
         </form>
     </div>
 </x-guest-layout>
+
