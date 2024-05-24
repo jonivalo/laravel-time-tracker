@@ -25,7 +25,9 @@ class ProjectController extends Controller
             'description' => 'nullable',
         ]);
 
-        Project::create($request->all());
+        $project = new Project($request->all());
+        $project->user_id = auth()->id();
+        $project->save();
 
         return redirect()->route('projects.index');
     }
