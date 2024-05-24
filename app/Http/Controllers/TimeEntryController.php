@@ -30,28 +30,27 @@ class TimeEntryController extends Controller
 
         $duration = (strtotime($request->end_time) - strtotime($request->start_time)) / 60;
 
-        TimeEntry::create([
-            'user_id' => auth()->id(),
+        $timeEntry = new TimeEntry([
             'task_id' => $request->task_id,
+            'user_id' => auth()->id(),
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'duration' => $duration,
         ]);
+        $timeEntry->save();
 
         return redirect()->route('time_entries.index');
     }
 
     public function show(TimeEntry $timeEntry)
     {
-        $task = $timeEntry->task; // Haetaan task, johon time entry liittyy
-        return view('time_entries.show', compact('timeEntry', 'task'));
+        return view('time_entries.show', compact('timeEntry'));
     }
 
     public function edit(TimeEntry $timeEntry)
     {
         $tasks = Task::all();
-        $task = $timeEntry->task;
-        return view('time_entries.edit', compact('timeEntry', 'tasks', 'task'));
+        return view('time_entries.edit', compact('timeEntry', 'tasks'));
     }
 
     public function update(Request $request, TimeEntry $timeEntry)
@@ -65,7 +64,6 @@ class TimeEntryController extends Controller
         $duration = (strtotime($request->end_time) - strtotime($request->start_time)) / 60;
 
         $timeEntry->update([
-            'user_id' => auth()->id(),
             'task_id' => $request->task_id,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
@@ -78,6 +76,7 @@ class TimeEntryController extends Controller
     public function destroy(TimeEntry $timeEntry)
     {
         $timeEntry->delete();
+
         return redirect()->route('time_entries.index');
     }
 }
