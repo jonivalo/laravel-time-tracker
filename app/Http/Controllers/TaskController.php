@@ -26,9 +26,11 @@ class TaskController extends Controller
             'description' => 'nullable',
         ]);
 
-        $project->tasks()->create($request->all());
+        $task = new Task($request->all());
+        $task->user_id = auth()->id();
+        $project->tasks()->save($task);
 
-        return redirect()->route('projects.show', $project);
+        return redirect()->route('projects.tasks.index', $project);
     }
 
     public function show(Project $project, Task $task)
@@ -50,13 +52,13 @@ class TaskController extends Controller
 
         $task->update($request->all());
 
-        return redirect()->route('projects.show', $project);
+        return redirect()->route('projects.tasks.index', $project);
     }
 
     public function destroy(Project $project, Task $task)
     {
         $task->delete();
 
-        return redirect()->route('projects.show', $project);
+        return redirect()->route('projects.tasks.index', $project);
     }
 }
