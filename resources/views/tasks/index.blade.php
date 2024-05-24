@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Tasks for Project: ') }} <span class="text-blue-500">{{ $project->name }}</span>
+            {{ __('Tasks for project: ') }} {{ $project->name }}
         </h2>
     </x-slot>
 
